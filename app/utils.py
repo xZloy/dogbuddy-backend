@@ -4,20 +4,16 @@ import numpy as np
 import tensorflow.lite as tflite
 import os
 
-# Obtener ruta absoluta del directorio actual (donde está utils.py)
 base_dir = os.path.dirname(__file__)
 
-# Rutas absolutas al modelo y a las etiquetas
 model_path = os.path.join(base_dir, "model.tflite")
 labels_path = os.path.join(base_dir, "labels.txt")
 
-# Cargar modelo y etiquetas una sola vez
 interpreter = tflite.Interpreter(model_path=model_path)
 interpreter.allocate_tensors()
 input_details = interpreter.get_input_details()
 output_details = interpreter.get_output_details()
 
-# Forma segura de cargar etiquetas
 with open(labels_path, "r") as f:
     labels = [line.strip() for line in f.readlines()]
 
