@@ -9,7 +9,6 @@ import os
 
 app = FastAPI()
 
-# Cargar modelo y etiquetas una vez al inicio
 interpreter = tf.lite.Interpreter(model_path=os.path.join(os.path.dirname(__file__), "model.tflite"))
 interpreter.allocate_tensors()
 input_details = interpreter.get_input_details()
@@ -20,9 +19,9 @@ with open(labels_path, "r") as f:
     labels = [line.strip() for line in f.readlines()]
 
 def preprocess(image: Image.Image) -> np.ndarray:
-    image = image.resize((224, 224))  # Ajustar al tamaño del modelo
+    image = image.resize((224, 224))  
     image = np.array(image).astype(np.float32)
-    image = image / 255.0  # Normalización como en tu app
+    image = image / 255.0  
     image = np.expand_dims(image, axis=0)
     return image
 
